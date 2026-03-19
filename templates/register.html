@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}참가 등록{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h2>워크숍 등록</h2>
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  <form method="post">
+    <label>이름* <input type="text" name="name" required></label>
+    <label>이메일 <input type="email" name="email" placeholder="name@example.com"></label>
+    <label>소속 <input type="text" name="organization"></label>
+    <button type="submit">등록하고 대기실로 이동</button>
+  </form>
+</section>
+{% endblock %}

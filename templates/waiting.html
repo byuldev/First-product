@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}대기실{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h2>{{ name }}님, 등록 완료!</h2>
+  <p>시작 인원이 차면 자동으로 문제 페이지로 이동합니다.</p>
+  <p id="status">대기 상태 확인 중...</p>
+  <progress id="progress" value="0" max="100"></progress>
+</section>
+<script>
+  const token = "{{ token }}";
+  const statusEl = document.getElementById('status');
+  const progress = document.getElementById('progress');
+
+  async function poll() {
+    const res = await fetch(`/api/status/${token}`);
+    const data = await res.json();
+    if (data.error) {
+      statusEl.textContent = '등록 정보를 찾지 못했습니다.';
+      return;
+    }
+
+    const percent = Math.min(100, Math.floor((data.current / data.threshold) * 100));
+    progress.value = percent;
+    statusEl.textContent = `현재 ${data.current} / ${data.threshold}명 등록 (${percent}%)`;
+
+    if (data.started) {
+      statusEl.textContent = '워크숍이 시작되었습니다. 문제 페이지로 이동합니다...';
+      window.location.href = data.start_url;
+      return;
+    }
+
+    setTimeout(poll, 3000);
+  }
+
+  poll();
+</script>
+{% endblock %}

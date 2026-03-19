@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}워크숍 대기실{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>공격/방어 실습 워크숍</h2>
+  <p>QR로 등록하면 자동 대기열에 들어가며, 설정 인원 도달 시 자동 시작됩니다.</p>
+  <ul>
+    <li>현재 등록: <strong>{{ current }}명</strong></li>
+    <li>시작 기준: <strong>{{ threshold }}명</strong></li>
+    <li>상태: <strong>{{ '진행중' if started else '대기중' }}</strong></li>
+  </ul>
+</section>
+<section class="grid">
+  <div class="card">
+    <h3>등록 QR</h3>
+    <img class="qr" src="{{ qr_image }}" alt="등록 QR">
+    <p><a href="{{ register_url }}">직접 등록 링크 열기</a></p>
+  </div>
+  <div class="card">
+    <h3>진행 안내</h3>
+    <ol>
+      <li>참가자 QR 스캔 후 등록</li>
+      <li>대기 화면에서 자동 상태 갱신</li>
+      <li>임계치 도달 시 문제 페이지 자동 오픈</li>
+    </ol>
+  </div>
+</section>
+{% endblock %}
