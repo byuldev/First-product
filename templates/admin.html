@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}운영자 페이지{% endblock %}
+{% block content %}
+<section class="card">
+  <h2>운영자 제어판</h2>
+  <p>현재 등록: <strong>{{ current }}명</strong> / 시작 기준: <strong>{{ threshold }}명</strong></p>
+  <p>상태: <strong>{{ '진행중' if started else '대기중' }}</strong></p>
+</section>
+<section class="grid">
+  <form class="card" method="post">
+    <h3>시작 인원 변경</h3>
+    <input type="hidden" name="action" value="set_threshold">
+    <label>임계치 <input type="number" name="threshold" min="1" value="{{ threshold }}"></label>
+    <button type="submit">저장</button>
+  </form>
+
+  <form class="card" method="post">
+    <h3>즉시 시작</h3>
+    <input type="hidden" name="action" value="start_now">
+    <button type="submit">지금 시작</button>
+  </form>
+
+  <form class="card" method="post">
+    <h3>세션 리셋</h3>
+    <input type="hidden" name="action" value="reset">
+    <button type="submit">참가자 초기화 + 시작상태 해제</button>
+  </form>
+</section>
+{% endblock %}
